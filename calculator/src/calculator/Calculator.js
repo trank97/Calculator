@@ -5,38 +5,35 @@ export default class Calculator extends Component {
 
   state = {
     resultCalcu: '0',
-    typingElement: '',
+    typingElement: '0',
   }
+  flag=true;
+
   typingNumber = (value) => {
-    if (this.state.typingElement[this.state.typingElement.length - 1] === '+' && this.state.typingElement[this.state.typingElement.length - 1] === value) {
-      value = ''
+    let operator = ['/', '*', '+', '-', '.'];
+    if(this.state.typingElement[this.state.typingElement.length - 1] === '+'){
+      if(value === '*' || value === '/' || value==='+') value=''
     }
-    if (this.state.typingElement[this.state.typingElement.length - 1] === '-' && this.state.typingElement[this.state.typingElement.length - 1] === value) {
-      value = ''
-    } if (this.state.typingElement[this.state.typingElement.length - 1] === '*' && this.state.typingElement[this.state.typingElement.length - 1] === value) {
-      value = ''
-    } if (this.state.typingElement[this.state.typingElement.length - 1] === '/' && this.state.typingElement[this.state.typingElement.length - 1] === value) {
-      value = ''
-    } if (this.state.typingElement[this.state.typingElement.length - 1] === '.' && this.state.typingElement[this.state.typingElement.length - 1] === value) {
-      value = ''
+    if(this.state.typingElement[this.state.typingElement.length - 1] === '-'){
+      if(value === '*' || value === '/' || value==='-') value=''
     }
+    if (this.state.typingElement[this.state.typingElement.length - 1] === '*' || this.state.typingElement[this.state.typingElement.length - 1] === '/') {
+      if (value === '*' || value === '/') value = ''
+    }
+    if (this.state.typingElement[this.state.typingElement.length - 1] === '.' && operator.includes(value))       value = ''
 
-
+    
     setTimeout(() => {
       this.setState({
-        typingElement: this.state.typingElement + (value),
+        typingElement: this.state.typingElement.replace(/^0+/, '') + (value),
       });
-    })
-
-
-
-
+    }, 100)
   }
 
   allClear = () => {
     this.setState({
       resultCalcu: '0',
-      typingElement: '',
+      typingElement: '0',
     })
   }
 
@@ -52,9 +49,6 @@ export default class Calculator extends Component {
         typingElement: eval(this.state.typingElement.replace(/^0+/, '')).toString(),
         resultCalcu: this.state.typingElement + '=',
       });
-      setTimeout(() => {
-        console.log(typeof this.state.typingElement)
-      })
     } catch (err) {
       this.setState({
         resultCalcu: 'Please press the all clear(AC) button!',

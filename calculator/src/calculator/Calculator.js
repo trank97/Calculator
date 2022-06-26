@@ -8,13 +8,6 @@ export default class Calculator extends Component {
     typingElement: '',
   }
   typingNumber = (value) => {
-
-    let operator = ['+', '-', '*', '/', '.'];
-    // if(operator.includes(value)){
-    //   console.log('chuc mung')
-    // }
-    // let indexLast = operator.indexOf(value);
-    // console.log(indexLast)
     if (this.state.typingElement[this.state.typingElement.length - 1] === '+' && this.state.typingElement[this.state.typingElement.length - 1] === value) {
       value = ''
     }
